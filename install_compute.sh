@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "ENABLED_SERVICES=n-cpu,rabbit,g-api,neutron,q-agt
+echo "ENABLED_SERVICES=n-cpu,rabbit,neutron,q-agt
 SERVICE_HOST=$1
 MYSQL_HOST=\$SERVICE_HOST
 RABBIT_HOST=\$SERVICE_HOST
