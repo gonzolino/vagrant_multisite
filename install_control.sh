@@ -5,4 +5,8 @@ enable_service q-agt
 enable_service q-dhcp
 enable_service q-l3
 enable_service q-meta
+enable_service h-eng
+enable_service h-api
+enable_service h-api-cfn
+enable_service h-api-cw
 enable_service neutron" >> devstack/localrc
