@@ -1,0 +1,146 @@
+#
+# This is a multi region hello world HOT template defining two remote stacks
+# in different regions.
+#
+heat_template_version: 2013-05-23
+
+description: >
+  An example Heat Orchestration Template (HOT).
+  WordPress is web software you can use to create a beautiful website
+  or blog. This template installs two instances per region: one running a
+  WordPress deployment and the other using a local MySQL database to
+  store the data.
+
+parameters:
+  key_name:
+    type: string
+    description : Name of a KeyPair to enable SSH access to the instance
+    default: test_key
+
+  instance_type:
+    type: string
+    description: Instance type for web and DB servers
+    default: m1.small
+    constraints:
+      - allowed_values: [m1.tiny, m1.small, m1.medium, m1.large, m1.xlarge]
+        description: instance_type must be a valid instance type
+
+  image_id:
+    type: string
+    description: >
+      Name or ID of the image to use for the WordPress server.
+      Recommended values are fedora-20.i386 or fedora-20.x86_64;
+      get them from http://cloud.fedoraproject.org/fedora-20.i386.qcow2
+      or http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2 .
+    default: fedora-20.x86_64
+
+  db_availability_zone:
+    type: string
+    description: The availability zone to install the database server in.
+
+  web_availability_zone:
+    type: string
+    description: The availability zone to install the web server in.
+
+  db_name:
+    type: string
+    description: WordPress database name
+    default: wordpress
+    constraints:
+      - length: { min: 1, max: 64 }
+        description: db_name must be between 1 and 64 characters
+      - allowed_pattern: '[a-zA-Z][a-zA-Z0-9]*'
+        description: >
+          db_name must begin with a letter and contain only alphanumeric
+          characters
+
+  db_username:
+    type: string
+    description: The WordPress database admin account username
+    default: admin
+    hidden: true
+    constraints:
+      - length: { min: 1, max: 16 }
+        description: db_username must be between 1 and 16 characters
+      - allowed_pattern: '[a-zA-Z][a-zA-Z0-9]*'
+        description: >
+          db_username must begin with a letter and contain only alphanumeric
+          characters
+
+  db_password:
+    type: string
+    description: The WordPress database admin account password
+    default: admin
+    hidden: true
+    constraints:
+      - length: { min: 1, max: 41 }
+        description: db_password must be between 1 and 41 characters
+      - allowed_pattern: '[a-zA-Z0-9]*'
+        description: db_password must contain only alphanumeric characters
+
+  db_root_password:
+    type: string
+    description: Root password for MySQL
+    default: admin
+    hidden: true
+    constraints:
+      - length: { min: 1, max: 41 }
+        description: db_root_password must be between 1 and 41 characters
+      - allowed_pattern: '[a-zA-Z0-9]*'
+        description: db_root_password must contain only alphanumeric characters
+
+resources:
+  stack_one:
+    type: OS::Heat::Stack
+    properties:
+      context:
+        region_name: rg_bdc1
+      template: { get_file: "wordpress.yaml" }
+      timeout: 60
+      parameters:
+        image_id: { get_param: image_id }
+        instance_type: { get_param: instance_type }
+        key_name: { get_param: key_name }
+        web_availability_zone: { get_param: web_availability_zone }
+        db_availability_zone: { get_param: db_availability_zone }
+        db_root_password: { get_param: db_root_password }
+        db_name: { get_param: db_name }
+        db_username: { get_param: db_username }
+        db_password: { get_param: db_password }
+
+  stack_two:
+    type: OS::Heat::Stack
+    properties:
+      context:
+        region_name: rg_fdc1
+      template: { get_file: "wordpress.yaml" }
+      timeout: 60
+      parameters:
+        image_id: { get_param: image_id }
+        instance_type: { get_param: instance_type }
+        key_name: { get_param: key_name }
+        web_availability_zone: { get_param: web_availability_zone }
+        db_availability_zone: { get_param: db_availability_zone }
+        db_root_password: { get_param: db_root_password }
+        db_name: { get_param: db_name }
+        db_username: { get_param: db_username }
+        db_password: { get_param: db_password }
+
+  stack_three:
+    type: OS::Heat::Stack
+    properties:
+      context:
+        region_name: rg_fdc2
+      template: { get_file: "wordpress.yaml" }
+      timeout: 60
+      parameters:
+        image_id: { get_param: image_id }
+        instance_type: { get_param: instance_type }
+        key_name: { get_param: key_name }
+        web_availability_zone: { get_param: web_availability_zone }
+        db_availability_zone: { get_param: db_availability_zone }
+        db_root_password: { get_param: db_root_password }
+        db_name: { get_param: db_name }
+        db_username: { get_param: db_username }
+        db_password: { get_param: db_password }
+
