@@ -1,0 +1,42 @@
+heat_template_version: 2013-05-23
+
+description: >
+  Deploys a key pair to some regions. Uses id_rsa.pub as public key.
+
+parameters:
+  key_name:
+    type: string
+    description: Name for key pair.
+
+resources:
+  stack_bdc1:
+    type: OS::Heat::Stack
+    properties:
+      context:
+        region_name: rg_bdc1
+      template: { get_file: "keypair.yaml" }
+      timeout: 30
+      parameters:
+        name: { get_param: key_name }
+        public_key: { get_file: "id_rsa.pub" }
+
+  stack_fdc1:
+    type: OS::Heat::Stack
+    properties:
+      context:
+        region_name: rg_fdc1
+      template: { get_file: "keypair.yaml" }
+      timeout: 30
+      parameters:
+        name: { get_param: key_name }
+        public_key: { get_file: "id_rsa.pub" }
+  stack_fdc2:
+    type: OS::Heat::Stack
+    properties:
+      context:
+        region_name: rg_fdc2
+      template: { get_file: "keypair.yaml" }
+      timeout: 30
+      parameters:
+        name: { get_param: key_name }
+        public_key: { get_file: "id_rsa.pub" }

@@ -15,7 +15,6 @@ parameters:
   key_name:
     type: string
     description : Name of a KeyPair to enable SSH access to the instance
-    default: test_key
 
   instance_type:
     type: string
@@ -90,7 +89,7 @@ parameters:
         description: db_root_password must contain only alphanumeric characters
 
 resources:
-  stack_one:
+  stack_bdc1:
     type: OS::Heat::Stack
     properties:
       context:
@@ -108,7 +107,7 @@ resources:
         db_username: { get_param: db_username }
         db_password: { get_param: db_password }
 
-  stack_two:
+  stack_fdc1:
     type: OS::Heat::Stack
     properties:
       context:
@@ -126,7 +125,7 @@ resources:
         db_username: { get_param: db_username }
         db_password: { get_param: db_password }
 
-  stack_three:
+  stack_fdc2:
     type: OS::Heat::Stack
     properties:
       context:
