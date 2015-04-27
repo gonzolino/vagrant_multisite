@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# Base installation of a host.
+#
+# Configures apt sources, clones the devstack repository
+# and adds a base configuration to localrc.
+
 echo "
 deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse
 deb-src mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe multiverse

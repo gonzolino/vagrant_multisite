@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# Installation of a nova controller node.
+#
+# Ensures that the services needed for a
+# nova controller node are enabled.
+
 echo "disable_service n-net
 enable_service q-svc
 enable_service q-agt

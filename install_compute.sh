@@ -1,4 +1,14 @@
 #!/bin/bash
+#
+# Installation of a nova compute node.
+#
+# Ensures that only services needed for a
+# nova compute node are enabled. Also sets the
+# control node as service host.
+#
+# Arguments:
+# * IP adress of the control node
+
 echo "ENABLED_SERVICES=n-cpu,rabbit,neutron,q-agt
 SERVICE_HOST=$1
 MYSQL_HOST=\$SERVICE_HOST
