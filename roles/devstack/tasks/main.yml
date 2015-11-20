@@ -1,0 +1,22 @@
+---
+- name: install git
+  apt:
+    name: git
+    state: present
+  become: yes
+- name: clone devstack
+  git:
+    repo: '{{ git_base }}/openstack-dev/devstack'
+    dest: '{{ devstack_install_dir }}'
+- name: create localrc condifuration directory
+  file:
+    path: '{{ devstack_install_dir }}/localrc.d'
+    state: directory
+- name: configure localrc
+  template:
+    src: localrc.base.j2
+    dest: '{{ devstack_install_dir }}/localrc.d/localrc.base'
+- name: assemble localrc
+  assemble:
+    src: '{{ devstack_install_dir }}/localrc.d'
+    dest: '{{ devstack_install_dir }}/localrc'

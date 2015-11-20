@@ -1,0 +1,4 @@
+---
+devstack_install_dir: /home/vagrant/devstack
+host_ip: '{{ ansible_default_ipv4.address }}'
+region: RegionOne

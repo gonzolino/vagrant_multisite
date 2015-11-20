@@ -1,0 +1,8 @@
+---
+devstack_install_dir: /home/vagrant/devstack
+admin_password: secrete
+database_password: secrete
+rabbit_password: secrete
+service_password: secrete
+service_token: a682f596-76f3-11e3-b3b2-e716f9080d50
+git_base: https://git.openstack.org

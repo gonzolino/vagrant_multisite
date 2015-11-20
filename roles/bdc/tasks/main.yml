@@ -1,0 +1,9 @@
+---
+- name: configure localrc
+  template:
+    src: localrc.bdc.j2
+    dest: '{{ devstack_install_dir }}/localrc.d/localrc.bdc'
+- name: assemble localrc
+  assemble:
+    src: '{{ devstack_install_dir }}/localrc.d'
+    dest: '{{ devstack_install_dir }}/localrc'

@@ -1,0 +1,4 @@
+---
+apt_mirror: mirror://mirrors.ubuntu.com/mirrors.txt
+apt_distribution: trusty
+apt_upgrade: safe
